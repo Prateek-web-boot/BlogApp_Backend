@@ -25,10 +25,20 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserEntity updateUser(UserEntity us, int uid) {
-		// TODO Auto-generated method stub
-		UserEntity updatedUser = this.userRepo.save(us);
-		return updatedUser;
+	
+		
+		if(!this.userRepo.existsById(uid))
+		{
+			throw new ResourceNotFoundException("User", "User Id", uid);
+		}
+		else
+		{
+			return this.userRepo.save(us);
+		}
+		
 	}
+	
+
 
 	@Override
 	public List<UserEntity> getAllUser() {
@@ -45,7 +55,15 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void deleteUser(int uid) {
 		// TODO Auto-generated method stub
-		this.userRepo.deleteById(uid);
+		
+		if(!this.userRepo.existsById(uid))
+		{
+			throw new ResourceNotFoundException("User", "User Id", uid);
+		}
+		else
+		{
+			this.userRepo.deleteById(uid);
+		}
 
 	}
 

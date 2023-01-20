@@ -7,13 +7,15 @@ import com.boot.blog.entities.UserEntity;
 public interface UserService {
 
 	
-	UserEntity createUser(UserEntity us);
+	public UserEntity createUser(UserEntity us);
 	
-	UserEntity updateUser(UserEntity us, int uid);
+	public UserEntity updateUser(UserEntity us, int uid);
 	
-	List<UserEntity> getAllUser();
+	public List<UserEntity> getAllUser();
 	
-	UserEntity getUserById(int uid);
+	public UserEntity getUserById(int uid);
 	
 	void deleteUser(int uid);
+	
+	
 }
