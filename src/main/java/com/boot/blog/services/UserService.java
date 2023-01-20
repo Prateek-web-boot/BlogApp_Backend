@@ -2,18 +2,18 @@ package com.boot.blog.services;
 
 import java.util.List;
 
-import com.boot.blog.entities.User;
+import com.boot.blog.entities.UserEntity;
 
 public interface UserService {
 
 	
-	User createUser(User us);
+	UserEntity createUser(UserEntity us);
 	
-	User updateUser(User us, int uid);
+	UserEntity updateUser(UserEntity us, int uid);
 	
-	List<User> getAllUser();
+	List<UserEntity> getAllUser();
 	
-	User getUserById(int uid);
+	UserEntity getUserById(int uid);
 	
 	void deleteUser(int uid);
 }

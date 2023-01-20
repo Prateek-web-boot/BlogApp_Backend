@@ -2,45 +2,50 @@ package com.boot.blog.serviceImplemetation;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.boot.blog.entities.User;
+import com.boot.blog.entities.UserEntity;
+import com.boot.blog.exceptions.ResourceNotFoundException;
 import com.boot.blog.repositories.UserRepository;
 import com.boot.blog.services.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {
 	
-	UserRepository userRepo;
+	@Autowired
+	private UserRepository userRepo;
 
 	@Override
-	public User createUser(User us) {
+	public UserEntity createUser(UserEntity us) {
 		// TODO Auto-generated method stub
 		return this.userRepo.save(us);
 	
 	}
 
 	@Override
-	public User updateUser(User us, int uid) {
+	public UserEntity updateUser(UserEntity us, int uid) {
 		// TODO Auto-generated method stub
-		return null;
+		UserEntity updatedUser = this.userRepo.save(us);
+		return updatedUser;
 	}
 
 	@Override
-	public List<User> getAllUser() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<UserEntity> getAllUser() {
+	
+		return this.userRepo.findAll();
 	}
 
 	@Override
-	public User getUserById(int uid) {
-		// TODO Auto-generated method stub
-		return null;
+	public UserEntity getUserById(int uid) {
+	
+		return this.userRepo.findById(uid).orElseThrow(() -> new ResourceNotFoundException("User", "id", uid));
 	}
 
 	@Override
 	public void deleteUser(int uid) {
 		// TODO Auto-generated method stub
+		this.userRepo.deleteById(uid);
 
 	}
 

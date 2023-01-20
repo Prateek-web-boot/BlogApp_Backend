@@ -9,7 +9,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="users")
-public class User {
+public class UserEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -85,13 +85,13 @@ public class User {
 	}
 
 
-	public User() {
+	public UserEntity() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
 
-	public User(int user_id, String name, String email, String password, String about) {
+	public UserEntity(int user_id, String name, String email, String password, String about) {
 		super();
 		this.user_id = user_id;
 		this.name = name;
@@ -99,6 +99,7 @@ public class User {
 		this.password = password;
 		this.about = about;
 	}
+
 	
 	
 
