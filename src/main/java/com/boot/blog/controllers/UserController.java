@@ -2,11 +2,8 @@ package com.boot.blog.controllers;
 
 import java.util.List;
 
-import org.apache.catalina.User;
-import org.hibernate.sql.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +18,9 @@ import com.boot.blog.entities.UserEntity;
 import com.boot.blog.exceptions.ApiResponse;
 import com.boot.blog.services.UserService;
 
+import jakarta.validation.Valid;
+
+
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -32,7 +32,7 @@ public class UserController {
 	
 	// Create User
 	@PostMapping("/add_user")
-	public ResponseEntity<UserEntity> createUser(@RequestBody UserEntity us)
+	public ResponseEntity<UserEntity> createUser(@Valid @RequestBody UserEntity us)
 	{
 		UserEntity newUser = this.userService.createUser(us);
 		return new ResponseEntity<UserEntity>(newUser, HttpStatus.CREATED);
@@ -58,7 +58,7 @@ public class UserController {
 	
 	// update user by ID
 	@PutMapping("/updateUser/{userId}")
-	public ResponseEntity<UserEntity> updateUserById(@RequestBody UserEntity us, @PathVariable("userId") int userId)
+	public ResponseEntity<UserEntity> updateUserById(@Valid @RequestBody UserEntity us, @PathVariable("userId") int userId)
 	{
 		UserEntity updatedUser =this.userService.updateUser(us, userId);
 		return new ResponseEntity<UserEntity>(updatedUser, HttpStatus.OK);

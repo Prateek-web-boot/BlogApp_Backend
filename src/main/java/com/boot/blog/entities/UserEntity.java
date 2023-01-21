@@ -6,6 +6,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name="users")
@@ -15,16 +18,19 @@ public class UserEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int user_id;
 	
-	@Column(name="user_name", nullable = false, length=100)
+	@Column(name="user_name")
+	@NotEmpty
+	@Size(min = 4, message="Must be min of 4 character")
 	private String name;
 	
-	@Column(nullable = false, length=50)
+	@Email(message="Email not in correct format")
 	private String email;
 	
-	@Column(nullable = false, length=10)
+	@NotEmpty
+	@Size(min=4,max=10,message="Must be between 4 to 10 charcater")
 	private String password;
 	
-	
+	@NotEmpty
 	private String about;
 
 
