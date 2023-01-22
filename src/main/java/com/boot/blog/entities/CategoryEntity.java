@@ -1,9 +1,14 @@
 package com.boot.blog.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
@@ -23,6 +28,10 @@ public class CategoryEntity {
 	@NotEmpty
 	@Size(min=10, message="Description can not be less than 10 character")
 	private String categoryDescription;
+	
+	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+	private List<PostEntity> posts = new ArrayList<>();
+	
 
 	public int getCategoryId() {
 		return categoryId;
