@@ -29,5 +29,8 @@ public class PostController {
 		
 		return new ResponseEntity<PostEntity>(newPost, HttpStatus.CREATED); 
 	}
+	
+	
+	// get all post
 
 }
