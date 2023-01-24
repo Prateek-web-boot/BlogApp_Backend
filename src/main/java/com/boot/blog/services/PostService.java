@@ -27,5 +27,8 @@ public interface PostService {
 	
 	//get all posts by category
 	public List<PostEntity> getPostsByCategory(int categoryId);
+	
+	// search by keyword
+	public List<PostEntity> searchByKeyword(String keyWord);
 
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.boot.blog.entities.CategoryEntity;
 import com.boot.blog.entities.PostEntity;
 import com.boot.blog.entities.UserEntity;
+import com.boot.blog.exceptions.ResourceNotFoundException;
 import com.boot.blog.repositories.CategoryRepository;
 import com.boot.blog.repositories.PostRepository;
 import com.boot.blog.repositories.UserRepository;
@@ -46,25 +47,43 @@ public class PostServiceImpl implements PostService{
 	@Override
 	public PostEntity updatePost(PostEntity post, int postId) {
 		// TODO Auto-generated method stub
-		return null;
+		
+		if(!this.postRepo.existsById(postId))
+		{
+			throw new ResourceNotFoundException("Post", "Post Id", postId);
+			
+		}
+		else
+		{
+			return this.postRepo.save(post);
+		}
 	}
 
 	@Override
 	public void deletePost(int postId) {
-		// TODO Auto-generated method stub
+
+		if(!this.postRepo.existsById(postId))
+		{
+			throw new ResourceNotFoundException("User", "User Id", postId);
+		}
+		else
+		{
+			this.postRepo.deleteById(postId);
+		}
 		
 	}
 
 	@Override
 	public List<PostEntity> getAllPosts() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		
+		return this.postRepo.findAll();
+		}
 
 	@Override
 	public PostEntity getPostById(int postId) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		PostEntity post = this.postRepo.findById(postId).orElseThrow(() -> new ResourceNotFoundException("Post", "Post ID", postId));
+		return post;
 	}
 
 	@Override
@@ -81,6 +100,12 @@ public class PostServiceImpl implements PostService{
 		CategoryEntity category = this.categoryRepo.findById(categoryId).get();
 		List<PostEntity> postByCategory = this.postRepo.findByCategory(category);
 		return postByCategory;
+	}
+
+	@Override
+	public List<PostEntity> searchByKeyword(String keyWord) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
