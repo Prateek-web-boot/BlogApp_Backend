@@ -64,7 +64,7 @@ public class PostServiceImpl implements PostService{
 
 		if(!this.postRepo.existsById(postId))
 		{
-			throw new ResourceNotFoundException("User", "User Id", postId);
+			throw new ResourceNotFoundException("Post", "Post Id", postId);
 		}
 		else
 		{
@@ -76,7 +76,8 @@ public class PostServiceImpl implements PostService{
 	@Override
 	public List<PostEntity> getAllPosts() {
 		
-		return this.postRepo.findAll();
+		List<PostEntity> allPOsts = this.postRepo.findAll();
+		return allPOsts;
 		}
 
 	@Override

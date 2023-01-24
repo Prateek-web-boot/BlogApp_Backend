@@ -72,9 +72,9 @@ public class PostController {
 	// delete Post
 	
 	@DeleteMapping("/deletePost/{postId}")
-	public ResponseEntity<ApiResponse> deletePost(@PathVariable int postID)
+	public ResponseEntity<ApiResponse> deletePost(@PathVariable("postId") int postId)
 	{
-		this.postService.deletePost(postID);
+		this.postService.deletePost(postId);
 		ApiResponse response = new ApiResponse("Post Deleted",true);
 		
 		return new ResponseEntity<ApiResponse>(response, HttpStatus.OK);
@@ -89,4 +89,14 @@ public class PostController {
 		
 		return new ResponseEntity<PostEntity>(updatedPost, HttpStatus.CREATED);
 	}
+	
+	
+	//get Single post by ID
+	@GetMapping("/singlePost/{postId}")
+	public ResponseEntity<PostEntity> postById(@PathVariable int postId)
+	{
+		PostEntity singlePost = this.postService.getPostById(postId);
+		return new ResponseEntity<PostEntity>(singlePost, HttpStatus.OK);
+	}
+	
 }
