@@ -70,13 +70,17 @@ public class PostServiceImpl implements PostService{
 	@Override
 	public List<PostEntity> getPostsByUser(int userId) {
 		// TODO Auto-generated method stub
-		return null;
+		UserEntity user = this.userRepo.findById(userId).get();
+		List<PostEntity> postByUser = this.postRepo.findByUser(user);
+		return  postByUser;
 	}
 
 	@Override
 	public List<PostEntity> getPostsByCategory(int categoryId) {
-		// TODO Auto-generated method stub
-		return null;
+
+		CategoryEntity category = this.categoryRepo.findById(categoryId).get();
+		List<PostEntity> postByCategory = this.postRepo.findByCategory(category);
+		return postByCategory;
 	}
 
 }
