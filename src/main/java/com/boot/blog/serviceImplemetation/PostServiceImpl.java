@@ -106,7 +106,10 @@ public class PostServiceImpl implements PostService{
 	@Override
 	public List<PostEntity> searchByKeyword(String keyWord) {
 		// TODO Auto-generated method stub
-		return null;
+		
+		List<PostEntity> searchResult = this.postRepo.searchByTitle("%"+keyWord+"%");
+		//List<PostEntity> searchResult = this.postRepo.findByTitleContaining(keyWord);
+		return searchResult;
 	}
 
 }
