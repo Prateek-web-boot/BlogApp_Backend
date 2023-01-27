@@ -4,12 +4,16 @@ import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.boot.blog.entities.CategoryEntity;
 import com.boot.blog.entities.PostEntity;
 import com.boot.blog.entities.UserEntity;
 import com.boot.blog.exceptions.ResourceNotFoundException;
+import com.boot.blog.payloads.PostResponse;
 import com.boot.blog.repositories.CategoryRepository;
 import com.boot.blog.repositories.PostRepository;
 import com.boot.blog.repositories.UserRepository;
@@ -74,10 +78,14 @@ public class PostServiceImpl implements PostService{
 	}
 
 	@Override
-	public List<PostEntity> getAllPosts() {
+	public List<PostEntity> getAllPosts(int pageNumber, int pageSize) {
+	
+		Pageable p = PageRequest.of(pageNumber, pageSize);
 		
-		List<PostEntity> allPOsts = this.postRepo.findAll();
-		return allPOsts;
+		Page<PostEntity> pagePost = this.postRepo.findAll(p);
+		
+		List<PostEntity> allPosts = pagePost.getContent();
+		return allPosts;
 		}
 
 	@Override
