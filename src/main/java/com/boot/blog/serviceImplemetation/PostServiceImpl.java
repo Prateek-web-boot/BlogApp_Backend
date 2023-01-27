@@ -46,17 +46,15 @@ public class PostServiceImpl implements PostService{
 
 	@Override
 	public PostEntity updatePost(PostEntity post, int postId) {
-		// TODO Auto-generated method stub
 		
-		if(!this.postRepo.existsById(postId))
-		{
-			throw new ResourceNotFoundException("Post", "Post Id", postId);
+			PostEntity oldPost = this.postRepo.findById(postId).orElseThrow(() -> new ResourceNotFoundException("Post", "Post Id", postId)) ;
+			oldPost.setTitle(post.getTitle());
+			oldPost.setContent(post.getContent());
+			oldPost.setImageName(post.getImageName());
 			
-		}
-		else
-		{
-			return this.postRepo.save(post);
-		}
+			PostEntity updatedPost = this.postRepo.save(oldPost);
+			return updatedPost;
+		
 	}
 
 	@Override
