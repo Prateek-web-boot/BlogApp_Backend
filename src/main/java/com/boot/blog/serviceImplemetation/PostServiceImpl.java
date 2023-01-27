@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.boot.blog.entities.CategoryEntity;
@@ -76,9 +77,10 @@ public class PostServiceImpl implements PostService{
 	}
 
 	@Override
-	public PostResponse getAllPosts(int pageNumber, int pageSize) {
+	public PostResponse getAllPosts(int pageNumber, int pageSize, String sortBy) {
 	
-		Pageable p = PageRequest.of(pageNumber, pageSize);
+		Sort sort = Sort.by(Sort.Direction.ASC, "postId");
+		Pageable p = PageRequest.of(pageNumber, pageSize, sort);
 		
 		Page<PostEntity> pagePost = this.postRepo.findAll(p);
 		
@@ -89,7 +91,7 @@ public class PostServiceImpl implements PostService{
 		postResponse.setContent(allPosts);
 		postResponse.setPageNumber(pagePost.getNumber());
 		postResponse.setPageSize(pagePost.getSize());
-		postResponse.setTotalPage(pagePost.getNumberOfElements());
+		postResponse.setTotalPage(pagePost.getTotalPages());
 		postResponse.setLastPage(pagePost.isLast());
 		postResponse.setTotalElements(pagePost.getTotalElements());
 		
