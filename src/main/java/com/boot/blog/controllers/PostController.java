@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.boot.blog.entities.PostEntity;
 import com.boot.blog.exceptions.ApiResponse;
+import com.boot.blog.payloads.PostResponse;
 import com.boot.blog.services.PostService;
 
 @RestController
@@ -62,15 +63,15 @@ public class PostController {
 	// get all post
 	
 	@GetMapping("/allPosts")
-	public ResponseEntity<List<PostEntity>> getAllPosts(
+	public ResponseEntity<PostResponse> getAllPosts(
 			
 			@RequestParam(value="pageNumber", defaultValue="0", required=false) int pageNumber,
 			@RequestParam(value="pageSize", defaultValue="5", required=false) int pageSize
 			)
 	{
-		List<PostEntity> allPost = this.postService.getAllPosts(pageNumber, pageSize);
+		PostResponse allPosts = this.postService.getAllPosts(pageNumber, pageSize);
 		
-		return new ResponseEntity<List<PostEntity>>(allPost, HttpStatus.OK);
+		return new ResponseEntity<PostResponse>(allPosts, HttpStatus.OK);
 	}
 
 	

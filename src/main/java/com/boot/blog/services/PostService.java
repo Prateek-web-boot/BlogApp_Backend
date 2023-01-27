@@ -3,6 +3,7 @@ package com.boot.blog.services;
 import java.util.List;
 
 import com.boot.blog.entities.PostEntity;
+import com.boot.blog.payloads.PostResponse;
 
 public interface PostService {
 	
@@ -16,7 +17,7 @@ public interface PostService {
 	void deletePost(int postId);
 	
 	//get All post
-	public List<PostEntity> getAllPosts(int pageNumber, int pageSize);
+	public PostResponse getAllPosts(int pageNumber, int pageSize);
 	
 	//getPost by Id
 	public PostEntity getPostById(int postId);

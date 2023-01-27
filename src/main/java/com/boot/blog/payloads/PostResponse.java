@@ -1,20 +1,21 @@
 package com.boot.blog.payloads;
 
+import java.util.List;
+
+import com.boot.blog.entities.PostEntity;
+
 public class PostResponse {
 	
-	private String content;
+	private List<PostEntity> content;
 	private int pageNumber;
 	private int pageSize;
 	private int totalPage;
-	private int totalElements;
+	private long totalElements;
 	private boolean lastPage;
-	
-	
-	
-	public String getContent() {
+	public List<PostEntity> getContent() {
 		return content;
 	}
-	public void setContent(String content) {
+	public void setContent(List<PostEntity> content) {
 		this.content = content;
 	}
 	public int getPageNumber() {
@@ -35,11 +36,11 @@ public class PostResponse {
 	public void setTotalPage(int totalPage) {
 		this.totalPage = totalPage;
 	}
-	public int getTotalElements() {
+	public long getTotalElements() {
 		return totalElements;
 	}
-	public void setTotalElements(int totalElements) {
-		this.totalElements = totalElements;
+	public void setTotalElements(long l) {
+		this.totalElements = l;
 	}
 	public boolean isLastPage() {
 		return lastPage;
@@ -47,7 +48,12 @@ public class PostResponse {
 	public void setLastPage(boolean lastPage) {
 		this.lastPage = lastPage;
 	}
-	public PostResponse(String content, int pageNumber, int pageSize, int totalPage, int totalElements,
+	@Override
+	public String toString() {
+		return "PostResponse [content=" + content + ", pageNumber=" + pageNumber + ", pageSize=" + pageSize
+				+ ", totalPage=" + totalPage + ", totalElements=" + totalElements + ", lastPage=" + lastPage + "]";
+	}
+	public PostResponse(List<PostEntity> content, int pageNumber, int pageSize, int totalPage, int totalElements,
 			boolean lastPage) {
 		super();
 		this.content = content;
@@ -61,12 +67,8 @@ public class PostResponse {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	@Override
-	public String toString() {
-		return "PostResponse [content=" + content + ", pageNumber=" + pageNumber + ", pageSize=" + pageSize
-				+ ", totalPage=" + totalPage + ", totalElements=" + totalElements + ", lastPage=" + lastPage + "]";
-	}
 	
+
 	
 	
 

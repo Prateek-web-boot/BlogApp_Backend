@@ -76,14 +76,24 @@ public class PostServiceImpl implements PostService{
 	}
 
 	@Override
-	public List<PostEntity> getAllPosts(int pageNumber, int pageSize) {
+	public PostResponse getAllPosts(int pageNumber, int pageSize) {
 	
 		Pageable p = PageRequest.of(pageNumber, pageSize);
 		
 		Page<PostEntity> pagePost = this.postRepo.findAll(p);
 		
 		List<PostEntity> allPosts = pagePost.getContent();
-		return allPosts;
+		
+		PostResponse postResponse = new PostResponse();
+		
+		postResponse.setContent(allPosts);
+		postResponse.setPageNumber(pagePost.getNumber());
+		postResponse.setPageSize(pagePost.getSize());
+		postResponse.setTotalPage(pagePost.getNumberOfElements());
+		postResponse.setLastPage(pagePost.isLast());
+		postResponse.setTotalElements(pagePost.getTotalElements());
+		
+		return postResponse;
 		}
 
 	@Override
