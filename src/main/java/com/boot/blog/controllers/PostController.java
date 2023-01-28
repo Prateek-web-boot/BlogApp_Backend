@@ -1,10 +1,15 @@
 package com.boot.blog.controllers;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,12 +19,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.boot.blog.config.AppConstants;
 import com.boot.blog.entities.PostEntity;
 import com.boot.blog.exceptions.ApiResponse;
 import com.boot.blog.payloads.PostResponse;
+import com.boot.blog.services.FileService;
 import com.boot.blog.services.PostService;
+
+import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping("/api/")
@@ -28,6 +37,13 @@ public class PostController {
 	
 	@Autowired
 	private PostService postService;
+	
+	@Autowired 
+	private FileService fileService;
+	
+	@Value("${project.image}")
+	private String path;
+	
 	
 	//create new post
 	
@@ -120,9 +136,29 @@ public class PostController {
 	
 	//upload image
 	@PostMapping("/post/upload/image/{postId}")
-	public ResponseEntity<PostEntity> uploadImage()
+	public ResponseEntity<PostEntity> uploadImage(@RequestParam("image") MultipartFile image, @PathVariable("postId") int postId) throws IOException
 	{
+		PostEntity postById = this.postService.getPostById(postId);
 		
+		String uploadImage = this.fileService.uploadImage(path, image);
+		
+		postById.setImageName(uploadImage);
+		
+		PostEntity updatePost = this.postService.updatePost(postById, postId);
+		
+		return new ResponseEntity<PostEntity>(updatePost,HttpStatus.OK);
 	}
 	
+	
+	
+	// serve/Display the image
+	@GetMapping(value = "/post/image/{imageName}", produces=MediaType.IMAGE_JPEG_VALUE)
+
+	public void downloadImage(@PathVariable("imageName") String imageName, HttpServletResponse response) throws IOException
+	{
+		InputStream content = this.fileService.getImage(path, imageName);
+		response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+		StreamUtils.copy(content, response.getOutputStream());
+
+	}
 }
