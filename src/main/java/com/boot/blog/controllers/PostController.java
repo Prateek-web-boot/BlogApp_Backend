@@ -116,4 +116,13 @@ public class PostController {
 		return new ResponseEntity<List<PostEntity>>(searchPosts, HttpStatus.OK);
 	}
 	
+	
+	
+	//upload image
+	@PostMapping("/post/upload/image/{postId}")
+	public ResponseEntity<PostEntity> uploadImage()
+	{
+		
+	}
+	
 }
